@@ -8,6 +8,32 @@
 </head>
 <body>
     <?php
+
+    require 'vendor/autoload.php';
+    require 'vendor/altorouter/altorouter/AltoRouter.php';
+
+    $router = new AltoRouter();
+    $router->setBasePath('/mangatheque');
+
+    $router->map('GET', '/', 'ContollerPage#homePage', 'homepage');
+
+    $macth = $router->match();
+
+    var_dump($macth);
+
+    if(is_array($macth)) {
+        list($controller, $action) = explode("#", $match['target']);
+       $obj = new $controller();
+
+       if(is_callable($obj, $action)) {
+        call_user_func_array(array($obj, $action), $macth['params']);
+       }
+
+    } else {
+        http_response_code(404);
+    }
+
+
     session_start();
     if ( !empty($_POST['pseudo']) && !empty($_POST['pwd']) ) {
         $pseudo = $_POST['pseudo'];
