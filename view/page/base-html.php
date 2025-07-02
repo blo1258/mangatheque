@@ -6,9 +6,8 @@
     <title><? $title ?></title>
 </head>
 <body>
-    <h1>
-        <?= $content ?? '' ?>
-    </h1>
+    <h1><?= $title ?></h1>
+    <main><?= $content ?></main>
 </body>
 </html>
 <?php

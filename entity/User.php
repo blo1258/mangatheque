@@ -7,6 +7,13 @@ class User {
     private string $password = 'password123';
     private DateTimeImmutable $createdAt;
 
+    public function __construct($id, $pseudo, $email, $password) {
+        $this->id=$id;
+        $this->pseudo = $pseudo;
+        $this->email = $email;
+        $this->password = $password;
+    }
+
     public function getId() : int {
         return $this->id;
 
@@ -31,17 +38,7 @@ class User {
     
 }
 
-$user = new User();
-$user2 = new User();
 
-echo $user->getId(). '<br>';
-echo $user->setId(12). '<br>';
-echo $user2->getId(). '<br>'; 
-echo $user2->setId(2);
-echo $user2->getId(). '<br>'; // 2
-echo $user2->setId(3). '<br>'; // 
-echo $user2->setId(2);
-echo $user->getId(); // 12
 
 
 

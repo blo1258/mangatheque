@@ -17,8 +17,12 @@
 
     $router->map('GET', '/', 'ControllerPage#homePage', 'homepage');
 
-    $match = $router->match();
+    // user
+    $router->map('GET', '/user/[i:id]', 'ControllerUser#oneUserById', 'userPage');
 
+    $match = $router->match();
+    var_dump($match);
+    die;
     
     if(is_array($match)) {
         list($controller, $action) = explode("#", $match['target']);
@@ -32,3 +36,4 @@
         http_response_code(404);
     }
 
+    ?>
