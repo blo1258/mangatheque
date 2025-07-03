@@ -20,9 +20,11 @@
     // user
     $router->map('GET', '/user/[i:id]', 'ControllerUser#oneUserById', 'userPage');
 
+    // supprimer
+    $router->map('GET', '/user/delete/[i:id]', 'ControllerUser#deleteUser', 'user_delete');
+
     $match = $router->match();
-    var_dump($match);
-    die;
+    
     
     if(is_array($match)) {
         list($controller, $action) = explode("#", $match['target']);
