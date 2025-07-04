@@ -2,7 +2,7 @@
 
 class ModelUser extends Model {
 
-   
+    private $db;
     public function getUsers() : array {
        
         $query = $this->getDb()->query( "SELECT id, pseudo, email, password, created_at FROM user");
@@ -43,6 +43,18 @@ class ModelUser extends Model {
             return false;
         }
     }
+
+    // public function getAllUsers(): array
+    // {
+    //     $sql = "SELECT id, pseudo, email FROM user"; 
+    //     try {
+    //         $stmt = $this->db->query($sql);
+    //         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    //     } catch (\PDOException $e) {
+    //         error_log("Erreur: " . $e->getMessage());
+    //         return []; // 
+    //     }
+    // }
 
 }
 
