@@ -20,8 +20,14 @@
     // user
     $router->map('GET', '/user/[i:id]', 'ControllerUser#oneUserById', 'userPage');
 
+    //users
+    //$router->map('GET', '/users', 'ControllerUser#listUsers', 'users_list');
+
     // supprimer
     $router->map('GET', '/user/delete/[i:id]', 'ControllerUser#deleteUser', 'user_delete');
+
+    //register
+    
 
     $match = $router->match();
     
