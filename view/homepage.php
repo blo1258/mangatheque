@@ -2,6 +2,16 @@
 
 $title = "Page d'accueil !";
 ob_start();
+
+if (isset($success_message) && $success_message !== null) {
+    echo $success_message;
+}
+
+if(isset($error_message) && $error_message !== null) {
+    echo $error_message;
+}
+
+if(!empty($users)) :
 foreach($users as $user) :
 
 ?>
@@ -15,10 +25,12 @@ foreach($users as $user) :
 
 <?php
 endforeach;
+else :
+    ?>
+    <?php
+    endif;
 $content = ob_get_contents();
 ob_end_clean();
 require './view/page/base-html.php';
-
-
 
 ?>
