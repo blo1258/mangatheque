@@ -1,13 +1,8 @@
 <?php
-
 class ControllerPage {
-    public function homePage() {
+    public function homePage(){
         $modelUser = new ModelUser();
         $users = $modelUser->getUsers();
-        require './view/homepage.php';
-
-
+        require './view/page/homepage.php';
     }
 }
-
-?>

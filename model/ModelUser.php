@@ -1,62 +1,42 @@
 <?php
-
 class ModelUser extends Model {
-
-    private $db;
     public function getUsers() : array {
-       
-        $query = $this->getDb()->query( "SELECT id, pseudo, email, password, created_at FROM user");
-        
+        $query = $this->getDb()->query('SELECT id, pseudo, email, password FROM user');
         $arrayUser = [];
-        while($user = $query->fetch(PDO::FETCH_ASSOC)) {
+
+        while($user = $query->fetch(PDO::FETCH_ASSOC)){
             $arrayUser[] = new User($user);
         }
 
-        return $arrayUser;
+        return $arrayUser; 
     }
 
     public function getOneUserById(int $id) : ?User {
-       //$db = new PDO('mysql:host=localhost; dbname=mangatheque', 'root', 'root');
-       
-       $req = $this->getDb()->prepare('SELECT id, pseudo, email, password FROM user WHERE id= :id');
-       $req->bindParam(':id', $id, PDO::PARAM_INT);
-       $req->execute();
+        $req = $this->getDb()->prepare('SELECT id, pseudo, email, password, created_at FROM user WHERE id = :id ');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        
+        $req->execute();
 
-       $user = $req->fetch(PDO::FETCH_ASSOC);
-      
-       return $user ? new User($user) : null;
-       
+        $user = $req->fetch(PDO::FETCH_ASSOC);
+
+        return $user ? new User($user) : null;
     }
 
-    public function deleteUserById(int $id) : bool {
-         $db = $this->getDb();
+    public function updateOneUserById(int $id, string $pseudo, string $email, string $password) : bool {
+        $req = $this->getDb()->prepare('UPDATE user set pseudo = :pseudo, email = :email, password = :password WHERE id = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        $req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+        $req->bindParam(':email', $email, PDO::PARAM_STR);
+        $req->bindParam(':password', $password, PDO::PARAM_STR);
 
-        try {
-            $query = "DELETE FROM user WHERE id = :id";
-            $req = $db->prepare($query);
-            $req->bindParam(':id', $id, PDO::PARAM_INT);
-            $req->execute();
-
-            return $req->rowCount() > 0;
-        } catch (PDOException $e) {
-            error_log("Erruer". $e->getMessage());
-            return false;
-        }
+        return $req->execute();
     }
 
-    // public function getAllUsers(): array
-    // {
-    //     $sql = "SELECT id, pseudo, email FROM user"; 
-    //     try {
-    //         $stmt = $this->db->query($sql);
-    //         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-    //     } catch (\PDOException $e) {
-    //         error_log("Erreur: " . $e->getMessage());
-    //         return []; // 
-    //     }
-    // }
+    public function deleteOneUserById(int $id) : bool {
+        $req = $this->getDb()->prepare('DELETE FROM user WHERE id = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        $req->execute();
 
+        return $req->rowCount() > 0;
+    }
 }
-
-
-?>
