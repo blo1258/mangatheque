@@ -39,3 +39,16 @@ form {
     margin-top: 20px;
 }
 
+.alert-danger {
+    color: red;
+    background-color: #f8d7da;
+    padding: 10px;
+    border-radius: 5px;
+}
+.alert-success {
+    color: green;
+    background-color: #d4edda;
+    padding: 10px;
+    border-radius: 5px;
+}
+

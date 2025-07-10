@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require 'vendor/autoload.php';
 require 'vendor/altorouter/altorouter/AltoRouter.php';
 
@@ -12,7 +13,11 @@ $router->map('GET', '/user/[i:id]', 'ControllerUser#oneUserById', 'userPage');
 $router->map('GET', '/user/delete/[i:id]', 'ControllerUser#deleteUserById', 'userDelete');
 $router->map('GET|POST', '/user/update/[i:id]', 'ControllerUser#updateUser', 'userUpdate');
 
+//LOGIN REGISTRER LOGOUT
+$router->map('GET|POST', '/register', 'ControllerAuth#register', 'register');
+
 $match = $router->match();
+
 
 if(is_array($match)){
     list($controller, $action) = explode("#", $match['target']);

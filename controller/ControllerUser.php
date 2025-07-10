@@ -10,7 +10,7 @@ class ControllerUser {
             exit;
         }
 
-        require './view/user/one-user.php';
+        require './view/user/oneUser.php';
     }
 
     public function updateUser(int $id){
