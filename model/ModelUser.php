@@ -22,14 +22,25 @@ class ModelUser extends Model {
         return $user ? new User($user) : null;
     }
 
+    public function getOneUserByEmail(string $email) : ?User {
+        $req = $this->getDb()->prepare('SELECT id, pseudo, email, password FROM user WHERE email = :email');
+        $req->bindParam(':email', $email, PDO::PARAM_STR);
+        
+        $req->execute();
+
+        $user = $req->fetch(PDO::FETCH_ASSOC);
+
+        return $user ? new User($user) : null;
+    }
+
     public function createUser(string $pseudo, string $email, string $password) : bool {
         $req = $this->getDb()->prepare('INSERT INTO user (pseudo, email, password) VALUES (:pseudo, :email, :password)');
         
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         
         $req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
         $req->bindParam(':email', $email, PDO::PARAM_STR);
-        $req->bindParam(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+        $req->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
 
         return $req->execute();
     }
